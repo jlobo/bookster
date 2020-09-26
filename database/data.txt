@@ -1,0 +1,182 @@
+php artisan make:migration create_manufactorers_table
+
+php artisan make:migration create_users_table
+php artisan make:migration create_roles_table
+php artisan make:migration create_books_table
+php artisan make:migration create_books_authos_table
+php artisan make:migration create_authors_table
+php artisan make:migration create_genres_table
+php artisan make:migration create_reviews_table
+
+users
+
+users:
+    id INTEGER
+    email  VARCHAR(100)
+    full_name VARCHAR(100)
+    password VARCHAR(100)
+    approved bool
+    role_id INTEGER
+
+// Member, Curator, Administrator
+roles
+    id INTEGER
+    name varchar(50)
+
+//added, updated and deleted just by curators
+books
+    title unique.
+    image
+    genre_id
+    published int //year between 1700 and 2021 (exclusive)
+
+    
+books_authos
+    book_id
+    autho_id
+
+
+author
+    first_name
+    last_name
+    birth
+    nationality
+
+genres
+    id
+    name
+
+reviews
+    id
+
+//one review for the same book and account
+CREATE TABLE IF NOT EXISTS reviews (
+    id
+    book_id,
+    user_id,
+    rating    // between 1 to 5
+    description   // > 5 chars,
+    date
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS states (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  code  VARCHAR(3) NOT NULL UNIQUE,
+  'name' VARCHAR(50) NOT NULL,
+  imageUrl  VARCHAR(200) NOT NULL);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username  VARCHAR(50) NOT NULL UNIQUE,
+  full_name VARCHAR(50) NOT NULL);
+  
+CREATE TABLE IF NOT EXISTS activities (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  state_id INTEGER NOT NULL REFERENCES states(id),
+  name VARCHAR(50) NOT NULL,
+  address  VARCHAR(50) NULL,
+  imageUrl  VARCHAR(200) NOT NULL,
+  overview TEXT);
+    
+CREATE TABLE IF NOT EXISTS reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  activity_id INTEGER NOT NULL REFERENCES activities(id),
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  rating INT NOT NULL,
+  description TEXT NOT NULL);
+
+insert into states(name, code, imageUrl) values ('New South Wales', 'NSW', 'https://www.australia.com/content/australia/en_in/places/sydney-and-surrounds/guide-to-sydney/_jcr_content/image.adapt.740.medium.jpg');
+insert into states(name, code, imageUrl) values ('Queensland', 'QLD', 'https://www.telegraph.co.uk/content/dam/travel/Spark/tourism-australia-2018/story-bridge-at-night-brisbane-xlarge.jpg');
+insert into states(name, code, imageUrl) values ('South Australia', 'SA', 'https://www.ausyflags.com.au/wp-content/uploads/2016/01/Wall-murals-in-South-Australia.jpg');
+insert into states(name, code, imageUrl) values ('Tasmania', 'TAS', 'http://www.adventurewomen.com/wp-content/uploads/2018/04/1.-Cradle-Mountain-hero.jpg');
+insert into states(name, code, imageUrl) values ('Victoria', 'VIC', 'http://www.itworldcanada.com/wp-content/uploads/2017/06/melbourne-victoria-australia.jpg');
+insert into states(name, code, imageUrl) values ('Western Australia', 'WA', 'http://www.duskyswondersite.com/wp-content/uploads/2015/06/aus-The-Kimberly-W.-Aus..jpg');
+
+insert into users (username, full_name) values ('Dectgepro', 'Dectgepro');
+insert into users (username, full_name) values ('Adventurers049', 'Adventurers049');
+insert into users (username, full_name) values ('Stephanddanieltravel', 'The Average Wanderlust Couple');
+insert into users (username, full_name) values ('taniquap2019', 'Taniqua P');
+insert into users (username, full_name) values ('x96lee26', 'Adrian Lee');
+insert into users (username, full_name) values ('tamaraa653', 'Tamara A');
+insert into users (username, full_name) values ('Bellridge', 'Bellridge');
+insert into users (username, full_name) values ('leannetmccullock', 'leannetmccullock');
+insert into users (username, full_name) values ('TaniaB12345', 'TaniaB');
+insert into users (username, full_name) values ('730matthew', '730matthew');
+insert into users (username, full_name) values ('seankay86', 'Sean K');
+insert into users (username, full_name) values ('612teganm', 'Tegan S');
+insert into users (username, full_name) values ('Savvytravelmum', 'Shal U');
+insert into users (username, full_name) values ('johnfR5345PM', 'John F');
+insert into users (username, full_name) values ('tmp', 'My Tmp');
+
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (2, 'Tamborine Mountain', null, 'https://media-cdn.tripadvisor.com/media/photo-o/0f/87/a9/eb/caption.jpg', "Located on Brisbane's doorstep. It may only be an hour’s drive, but Tamborine Mountain feels like you’re a world away. The beautiful and picturesque area in the Scenic Rim has a rich history, is home to some of the most fertile land in Queensland, with stunning national parks and rainforests, and has its fair share of food and wine experiences.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (2, 'Surfers Paradise', null, 'https://media-cdn.tripadvisor.com/media/photo-m/1280/17/27/77/5b/photo0jpg.jpg', "Surfers Paradise is a seaside resort on Queensland's Gold Coast in eastern Australia. It's known for its high-rise skyline and Surfers Paradise Beach, which hosts a popular market several evenings a week. Along Cavill Avenue are shops, cafes and lively nightclubs. The towering Q1 building, with its SkyPoint observation deck, offers panoramic ocean and city views.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (2, 'Point Danger', 'Tweed Terrace, Coolangatta QLD 4225', 'https://media-cdn.tripadvisor.com/media/photo-w/15/8e/ba/49/photo1jpg.jpg', "Point Danger is a headland, located at Coolangatta on the southern end of the Gold Coast on the east coast of Australia. Separated by Snapper Rocks and Rainbow Bay to the west, with Duranbah Beach and the Tweed River mouth to the south, present-day Point Danger has also indicated the border between New South Wales and Queensland, Australia, since 1863.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (2, 'Sea World', 'Seaworld Dr, Main Beach QLD 4217', 'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/2f/c8/c7/shark-bay.jpg', "Sea World is a marine mammal park, oceanarium, and theme park located on the Gold Coast, Queensland, Australia. It includes rides, animal exhibits and other attractions, and it promotes conservation through education and the rescue and rehabilitation of sick, injured or orphaned wildlife.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (2, 'Currumbin Wildlife Sanctuary', '28 Tomewin St, Currumbin QLD 4223', 'https://media-cdn.tripadvisor.com/media/photo-o/05/5f/82/4a/currumbin-wildlife-sanctuary.jpg', "Currumbin Wildlife Sanctuary is a heritage-listed zoological garden at 28 Tomewin Street, Currumbin, Queensland, Australia. It was built in 1947 onwards. It was added to the Queensland Heritage Register on 18 September 2009");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (1, 'Sydney Opera House', 'Bennelong Point, Sydney NSW 2000', 'https://media-cdn.tripadvisor.com/media/photo-m/1280/17/3b/95/61/photo2jpg.jpg', "The Sydney Opera House is a multi-venue performing arts centre at Sydney Harbour in Sydney, New South Wales, Australia. It is one of the 20th century's most famous and distinctive buildings.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (1, 'Royal Botanic Garden Sydney', 'Royal Botanic Garden Sydney', 'https://media-cdn.tripadvisor.com/media/photo-o/13/2a/68/a3/caption.jpg', "The Royal Botanic Garden, Sydney is a heritage-listed major 30-hectare botanical garden, event venue and public recreation area located at Farm Cove on the eastern fringe of the Sydney central business district, in the City of Sydney local government area of New South Wales, Australia.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (1, 'Manly Beach', null, 'https://media-cdn.tripadvisor.com/media/photo-o/08/5e/31/a3/manly-beach.jpg', "Manly Beach is a beach situated among the Northern Beaches of Sydney, Australia in Manly, New South Wales. From north to south, the three main sections are Queenscliff, North Steyne, and South Steyne");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (5, 'Royal Botanic Gardens Victoria', 'Birdwood Ave, South Yarra VIC 3141', 'https://media-cdn.tripadvisor.com/media/photo-o/15/ee/05/e1/the-boardwalk-at-fern.jpg', "Royal Botanic Gardens Victoria are botanic gardens across two sites - Melbourne and Cranbourne. Melbourne Gardens was founded in 1846 when land was reserved on the south side of the Yarra River for a new botanic garden. It extends across 38 hectares that slope to the river with trees, garden beds, lakes and lawns.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (5, 'National Gallery of Victoria', '180 St Kilda Rd, Melbourne VIC 3006', 'https://media-cdn.tripadvisor.com/media/photo-o/0b/c7/03/b0/photo0jpg.jpg', "The National Gallery of Victoria, popularly known as the NGV, is an art museum in Melbourne, Victoria, Australia. Founded in 1861, it is Australia's oldest, largest and most visited art museum.");
+
+insert into activities(state_id, name, address, imageUrl, overview)
+values (5, 'ArtVo', 'Shop NCF, 07 Level/1 26 Star Cres, Docklands VIC 3008', 'https://media-cdn.tripadvisor.com/media/photo-o/0d/cf/4f/f9/you-ll-see-things-differently.jpg', "Welcome to Australia's first immersive, 3D 'trick-art' gallery. Priceless photos. Unbelievable scenarios. Explore the interactive gallery with over 11 themed zones. Touch the art and have fun!");
+
+
+insert into reviews (activity_id, user_id, rating, description) values (1,  1, 5, "Visited this place to check it out on our way back from our Country drive. Completely amazing view of the Sunset from the top, and obviously popular time for the locals and tourist to have a late picnic. Quite a romantic setting and can be colder. A lot of tours and outdoor activities to do. We didn't have time to do the tours to the falls but will definitely do it in our next trip. There's plenty of lovely accommodation and restaurants to enjoy. It is definitely worth a trip of at least 2-4 days.");
+insert into reviews (activity_id, user_id, rating, description) values (1,  2, 1, "We decided to take a drive to Tamborine Mtn for the day. No parking anywhere. No restaurants serving anything other than packet frozen food and toasted sandwiches. Nothing here to see other than congestion and overpriced coffee shops with little to no fresh food. Never again.");
+insert into reviews (activity_id, user_id, rating, description) values (1,  3, 5, "There are a number of spots along the mountain ridge that give you fantastic vista views over the wide plains below. A great spot to stop and have a picnic.");
+insert into reviews (activity_id, user_id, rating, description) values (2,  3, 5, "Loving here, best place to spend few hours relaxing and then go to eat something with so many choice around here.");
+insert into reviews (activity_id, user_id, rating, description) values (2,  4, 5, "Part of a coastline stretching over 10km's, of pristine sand, this part, is the tourist mecca of the gold coast, consisting of sky scrappers, many clubs, bars and eateries, catering to all needs. the beach is lined with a esplanade, that is excellent for stroll-in, (however be-aware of the electric hire bikes, scooters etc), with plenty of seating, even lounge areas. This place is definite must, to anyone visiting the coast.");
+insert into reviews (activity_id, user_id, rating, description) values (2,  14, 5, "this is a great beach which has a lot of easy to reach food outlets along the front the beach is very clean and the sea is beautiful blue and very warm");
+insert into reviews (activity_id, user_id, rating, description) values (3,  6, 4, "Nice place for a walk - you can go as short or long as you want. Good path and excellent view. Great to be out in nature");
+insert into reviews (activity_id, user_id, rating, description) values (3,  7, 5, "This is a must see for anyone visiting Coolangatta. There is a good walk around from the beach, and back down Boundary Road, or you can just drive to the Point. It is a high headland overlooking the sea and with views across the river mouth. I saw a distant whale! There are various monuments, including the large and impressive Captain Cook Memorial and Lighthouse. A local café seemed to be doing good business.");
+insert into reviews (activity_id, user_id, rating, description) values (3,  1, 5, "Lovely views of the beaches, from the cliffs at the Captain Cook Memorial. Surfers on the sea below. Good coffee shop across the road Cafe Dbar. One of the places if you are staying at Kirra Beach, -a little treasure of a destination, away from the high rise of Surfers Paradise");
+insert into reviews (activity_id, user_id, rating, description) values (6,  8, 4, "Nice place.The Sydney Opera House! It is a multi-venue performing arts centre and one of the 20th century's most famous buildings");
+insert into reviews (activity_id, user_id, rating, description) values (6,  3, 4, "Simply beautiful and amazing this iconic structure. Nice place to visit while in Sydney. Highly recommend!");
+insert into reviews (activity_id, user_id, rating, description) values (6,  9, 5, "We arrived a few monutes late for the concert and found it easy to get seated. The Hall is spectacular, of course, and that was the main reason for our visit. The Concert was not in our keen interests, but we marveled at the musicianship - and the unending encores (30 minutes)! A gorgeous setting at the Harbor. When we exited the Hall, the lighting, people, water, and views of the Sydney were wonderful.");
+insert into reviews (activity_id, user_id, rating, description) values (7,  10, 5, "The whole experience was beautiful. Having been to Paris & Versailles gardens, I still enjoyed the uniqueness of the Aussie gardens. Resilient native displays, thru to more cultivated & uniform. We enjoyed the art/monumental. The access to all areas was good and enabled a range of physical activity/fitness.");
+insert into reviews (activity_id, user_id, rating, description) values (7,  4, 5, "I last visited the Royal Botanical Gardens around 10 years ago. I forgot how beautiful it is. So close to the city and it felt so quiet. We are blessed to have this beautiful garden in Sydney.");
+insert into reviews (activity_id, user_id, rating, description) values (7,  5, 5, "I love this garden. It is free. You can walk around different types of flowers and plants. From the garden you can see a beautiful view of opera house and beautiful sunsets");
+insert into reviews (activity_id, user_id, rating, description) values (8,  11, 4, "I arrived at Manly beach the hard way, at the end of the long Manly scenic walk all the way from the Spit Bridge. My efforts and exertion were well worth it, when I saw the beach for the first time. It was lovely!");
+insert into reviews (activity_id, user_id, rating, description) values (8,  7, 5, "Manly beach was a great day out. We took the ferry from Darling harbour which was an enjoyable part of the day. Manly beach was great and even had beach volley ball sections which was brilliant. You can actually swim in the sea here compared to bondi. The currents are still strong though lol.");
+insert into reviews (activity_id, user_id, rating, description) values (8,  12, 4, "The weather was a bit gloomy. however there is still lots of people at the beach. So many shop with lots of souvenir along the walkway from the ferry terminal to the beach.");
+insert into reviews (activity_id, user_id, rating, description) values (9,  10, 4, "It was lovely and peaceful walking through the Royal Botanic Gardens in Melbourne seeing the beautiful lakes covered in water lilies and the flowers everywhere.");
+insert into reviews (activity_id, user_id, rating, description) values (9,  5, 5, "the botanic garden is a place where you can sit around after a rough day. very refreshing and very beautiful");
+insert into reviews (activity_id, user_id, rating, description) values (9,  13, 5, "I love walking around these gardens, possibly the best gardens around, even better than Singapore’s and that is saying something");
+insert into reviews (activity_id, user_id, rating, description) values (10, 14,  5, "The National Gallery of Victoria (NGV) has Australia's best collection of international art --- Australian art is at the Potter centre. Many pieces are internationally significant. The NGV also hosts visiting exhibitions of contemporary art. The European collection is very strong; some of the paintigs are masterpieces. The NGV has grear purchasing power, mainly due to the Felton Bequest.");
+insert into reviews (activity_id, user_id, rating, description) values (10, 3,  4, "Joined a guided tour which was very interesting. The Venetian glass, the water glass feature and temporary outside installation were the best for us. But we could not see everything.");
+insert into reviews (activity_id, user_id, rating, description) values (10, 7,  5, "The NGV has a number of permanent and one-off exhibitions of which there is bound to be something for you to enjoy. It’s well laid out and it is the perfect place to spend a rainy day.");
+insert into reviews (activity_id, user_id, rating, description) values (11, 13,  5, "Terri was the absolute best! Created such a good vibe for us and made it even more enjoyable.");
+insert into reviews (activity_id, user_id, rating, description) values (11, 7,  5, "One of the highlights of Melbourne and was very deserted when we visited at end of March due to impending lockdown of state. The displays have photo taking guides on floor to allow you to get the best photo. Well worth a visit when things return to normal");
+insert into reviews (activity_id, user_id, rating, description) values (11, 14,  5, "My daughter and I recently visited and had so much fun in all of the amazing artworks, taking a multitude of photos. Highly recommend :)");
