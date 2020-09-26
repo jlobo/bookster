@@ -10,6 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    function reviews() {
+        return $this->hasMany('App\Review');
+    }
+
+    function role() {
+        return $this->belongsTo('App\Role');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
