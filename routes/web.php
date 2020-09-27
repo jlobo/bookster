@@ -1,21 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Product;
-use App\Manufactorer;
+use App\Book;
+use App\Review;
 
 Route::get('/', function () {
-    return redirect("/product");
+    return redirect("/test1");
+});
+
+Route::get('/test0', function () {
+    $authors = Book::find(3)->authors;
+    dd($authors);
 });
 
 Route::get('/test1', function () {
-    $products = Manufactorer::find(1)->products;
-    dd($products);
+    $reviews = Book::find(1)->reviews;
+    dd($reviews);
 });
 
 Route::get('/test2', function () {
-    $manufactorer = Product::find(1)->manufactorer;
-    dd($manufactorer);
+    $book = Review::find(1)->book;
+    dd($book);
 });
 
 Route::resource('product', 'ProductController');
