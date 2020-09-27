@@ -53,7 +53,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('book')->with('book', Book::find($id));
     }
 
     /**

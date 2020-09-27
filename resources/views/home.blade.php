@@ -1,7 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<section class="testimonials text-center">
+    <div class="container">
+      <h2 class="mb-5">Books</h2>
+      <div class="row">
+
+      @forelse ($books as $book)
+      <div class="col-lg-4">
+          <div class="mx-auto mb-5 mb-lg-0">
+            <img class="img-fluid rounded-circle mb-3" src="{{$book->image}}" alt="" style="height: 200px;width: 200px;">
+            <h5><a href='{{url("/book/$book->id")}}'>{{$book->title}}</a></h5>
+          </div>
+      </div>
+      @empty
+      Sorry, there are no entries        
+      @endforelse
+      </div>
+    </div>
+</section>
+
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,5 +38,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @endsection
