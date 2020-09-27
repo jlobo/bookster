@@ -5,7 +5,7 @@ use App\Book;
 use App\Review;
 
 Route::get('/', function () {
-    return redirect("/test1");
+    return view("/welcome");
 });
 
 Route::get('/test0', function () {
@@ -24,3 +24,6 @@ Route::get('/test2', function () {
 });
 
 Route::resource('product', 'ProductController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
