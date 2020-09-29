@@ -5,7 +5,7 @@ use App\Book;
 use App\Review;
 
 Route::get('/', function () {
-    return redirect("/home");
+    return redirect("/book");
 });
 
 Route::get('/test0', function () {
@@ -23,7 +23,7 @@ Route::get('/test2', function () {
     dd($book);
 });
 
-Route::resource('product', 'ProductController');
+Route::get('/book/filter', 'BookController@filter')->name('book.filter');
 Route::resource('book', 'BookController');
 Auth::routes();
 

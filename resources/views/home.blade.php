@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('navbar')
+@if (Auth::check() && Auth::user()->isCurator())
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/book/new') }}">New Book</a>
+</li>
+@endif
+@endsection
+
 @section('content')
 <section class="testimonials text-center">
     <div class="container">
@@ -16,6 +24,10 @@
       @empty
       Sorry, there are no entries        
       @endforelse
+
+      </div>
+      <div class="row">
+          {{$books->render()}}    
       </div>
     </div>
 </section>

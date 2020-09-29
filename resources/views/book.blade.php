@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+
+@section('navbar')
+@if (Auth::check())
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/review/new') }}">New Review</a>
+</li>
+@endif
+@endsection
+
 @section('content')
 <section class="bg-light">
     <div class="container">
@@ -17,8 +26,11 @@
                         {{ $loop->index != 0 ? '-' : '' }} {{$author->first_name}} {{$author->last_name}}
                     @endforeach
                     | <a href='{{url("/$book->genre_id")}}'>{{$book->genre->name}}</a>
+
+                    @if (Auth::check() && Auth::user()->isCurator())
                     | <a  class="btn btn-link"  href='{{url("/activity/$book->id")}}'>Edit</a>
                     - <input class="btn btn-link" type="submit" value="Delete">
+                    @endif
                 </form>
             </div>
         </div>
@@ -36,7 +48,10 @@
                 <div class="mb-3">
                     {{$review->user->email}}
                     | <b>Stars: {{$review->rating}} </b> 
+
+                    @if (Auth::check() && Auth::id() == $review->user_id)
                     | <a  class="btn btn-link"  href='{{url("/review/$review->id/$book->id")}}'>Edit</a>
+                    @endif
                 </div>
                 <p>{{$review->description}}</p>
         </div>

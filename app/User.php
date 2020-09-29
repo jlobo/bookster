@@ -18,6 +18,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Role');
     }
 
+    function isCurator() {
+        return $this->role->id == 2;
+    }
+
+    function isAdmin() {
+        return $this->role->id == 3;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
