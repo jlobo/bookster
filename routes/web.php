@@ -23,6 +23,9 @@ Route::get('/test2', function () {
     dd($book);
 });
 
+Route::delete('/book/{book}/author/{author}', 'BookController@delete_author')->name('book.delete_author');
+Route::post('/book/{book}/author', 'BookController@add_author')->name('book.add_author');
+Route::get('/book/{book}/author', 'BookController@author')->name('book.author');
 Route::get('/book/filter', 'BookController@filter')->name('book.filter');
 Route::resource('book', 'BookController');
 Auth::routes();

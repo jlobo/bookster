@@ -95,12 +95,6 @@ class BookController extends Controller
         return redirect("/book/$book->id");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         return view('book')->with('book', Book::find($id));
@@ -152,5 +146,33 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function author($book_id)
+    {
+        $registered = DB::table('books_authors')
+            ->select('author_id')
+            ->where('book_id', '=', $book_id);
+        
+        $authors = DB::table('authors')->whereNotIn('id', $registered)->get();
+        return view('book_author')->with('book', Book::find($book_id))->with('authors', $authors);
+    }
+
+    public function add_author(Request $request, $book_id)
+    {
+        $book = Book::find($book_id);
+        $author = Author::find(request('author'));
+
+        $book->authors()->attach($author->id);
+        $book->save();
+
+        return redirect("/book/$book->id/author");
+    }
+
+    public function delete_author($book_id, $author_id)
+    {
+        Book::find($book_id)->authors()->detach($author_id);
+
+        return redirect("/book/$book_id/author");
     }
 }
