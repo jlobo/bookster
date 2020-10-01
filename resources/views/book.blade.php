@@ -19,7 +19,7 @@
         </div>
         <div class="row">
             <div class="mb-12">
-                <form method="post" action='{{url("/activity/$book->id/delete")}}'>
+                <form method="post" action='{{url("/book/$book->id/delete")}}'>
                     {{csrf_field()}}
                     By 
                     @foreach ($book->authors as $author)
@@ -28,7 +28,7 @@
                     | <a href='{{url("/$book->genre_id")}}'>{{$book->genre->name}}</a>
 
                     @if (Auth::check() && Auth::user()->isCurator())
-                    | <a  class="btn btn-link"  href='{{url("/activity/$book->id")}}'>Edit</a>
+                    | <a  class="btn btn-link"  href='{{url("/book/$book->id/edit")}}'>Edit</a>
                     - <input class="btn btn-link" type="submit" value="Delete">
                     @endif
                 </form>

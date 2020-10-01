@@ -3,7 +3,7 @@
 @section('navbar')
 @if (Auth::check() && Auth::user()->isCurator())
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('/book/new') }}">New Book</a>
+    <a class="nav-link" href="{{ url('/book/create') }}">New Book</a>
 </li>
 @endif
 @endsection

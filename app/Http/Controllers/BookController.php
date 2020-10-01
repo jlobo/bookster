@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Book;
 use App\Author;
+use App\Genre;
 
 use DateTime;
 use DB;
@@ -25,7 +26,7 @@ class BookController extends Controller
     public function filter(Request $request)
     {
         $this->validate($request, [
-            'year' => 'numeric|min:1|max:9999',
+            'year' => 'numeric|min:1700|max:2020',
             'genre' => 'numeric|min:1']);
 
         $books = DB::table('books');
@@ -66,7 +67,7 @@ class BookController extends Controller
          */
     public function create()
     {
-        //
+        return view('book_create')->with('genres', Genre::all());
     }
 
     /**
@@ -77,7 +78,21 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'genre' => 'required|numeric|min:1',
+            'image' => 'required|max:999',
+            'published' => 'required|date']
+        );
+
+        $book = new Book;
+        $book->title = request('title');
+        $book->genre_id = intval(request('genre'));
+        $book->image = request('image');
+        $book->published = request('published');
+        $book->save();
+
+        return redirect("/book/$book->id");
     }
 
     /**
@@ -99,7 +114,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('book_edit')->with('book', Book::find($id))->with('genres', Genre::all());
     }
 
     /**
@@ -111,7 +126,21 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'genre' => 'required|numeric|min:1',
+            'image' => 'required|max:999',
+            'published' => 'required|date']
+        );
+
+        $book = Book::find($id);
+        $book->title = request('title');
+        $book->genre_id = intval(request('genre'));
+        $book->image = request('image');
+        $book->published = request('published');
+        $book->save();
+
+        return redirect("/book/$book->id");
     }
 
     /**
