@@ -4,6 +4,14 @@
 Book edition
 @endsection
 
+@section('navbar')
+@if (Auth::check() && Auth::user()->isCurator())
+<li class="nav-item">
+    <a class="nav-link" href='{{ url("/book/$book->id/author") }}'>Authors</a>
+</li>
+@endif
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
