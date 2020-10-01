@@ -4,7 +4,7 @@
 @section('navbar')
 @if (Auth::check())
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('/review/new') }}">New Review</a>
+    <a class="nav-link" href='{{ url("/review/create?book=$book->id") }}'>New Review</a>
 </li>
 @endif
 @endsection
@@ -46,11 +46,10 @@
         <div class="col-12">
                 <h3 class="mb-0">{{$review->user->name}}</h3>
                 <div class="mb-3">
-                    {{$review->user->email}}
+                <small class="text-muted" style="font-size: small;">{{$review->created_at}}</small>
                     | <b>Stars: {{$review->rating}} </b> 
-
                     @if (Auth::check() && Auth::id() == $review->user_id)
-                    | <a  class="btn btn-link"  href='{{url("/review/$review->id/$book->id")}}'>Edit</a>
+                    | <a  class="btn btn-link"  href='{{url("/review/$review->id/edit")}}'>Edit</a>
                     @endif
                 </div>
                 <p>{{$review->description}}</p>

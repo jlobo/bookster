@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Review;
+
+use Auth;
+use DateTime;
+
 class ReviewController extends Controller
 {
     /**
@@ -23,7 +28,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        return view("review_create")->with('book_id', request('book'));
     }
 
     /**
@@ -34,7 +39,20 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'book_id' => 'required|numeric|min:1',
+            'rating' => 'required|numeric|min:1|max:5',
+            'description' => 'required|max:255']
+        );
+
+        $review = new Review();
+        $review->book_id = request('book_id');
+        $review->user_id = Auth::id();
+        $review->rating = request('rating');
+        $review->description = request('description');
+        $review->save();
+
+        return redirect("/book/$review->book_id");
     }
 
     /**
@@ -56,7 +74,7 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("review_edit")->with('review', Review::find($id));
     }
 
     /**
@@ -68,7 +86,17 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'rating' => 'required|numeric|min:1|max:5',
+            'description' => 'required|max:255']
+        );
+
+        $review = Review::find($id);
+        $review->rating = request('rating');
+        $review->description = request('description');
+        $review->save();
+
+        return redirect("/book/$review->book_id");
     }
 
     /**
