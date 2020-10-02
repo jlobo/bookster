@@ -12,6 +12,10 @@ use Illuminate\Validation\Rule;
 
 class ReviewController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth', ['except'=>['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +46,7 @@ class ReviewController extends Controller
     {
         $this->validate($request, [
             'rating' => 'required|numeric|min:1|max:5',
-            'description' => 'required|max:255',
+            'description' => 'required|min:5|max:255',
             'book_id' => [
                 'required', 'numeric', 'min:1',
                 Rule::unique('reviews', 'book_id')->where(function ($query) {
@@ -98,6 +102,9 @@ class ReviewController extends Controller
         );
 
         $review = Review::find($id);
+        if ($review->user_id != Auth::id())
+            return redirect('/login');
+
         $review->rating = request('rating');
         $review->description = request('description');
         $review->save();

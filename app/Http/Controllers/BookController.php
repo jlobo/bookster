@@ -13,6 +13,9 @@ use DB;
 
 class BookController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth', ['except'=>['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -73,6 +76,9 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()->isCurator())
+            return redirect('/login');
+
         $this->validate($request, [
             'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
@@ -115,6 +121,9 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::user()->isCurator())
+            return redirect('/login');
+
         $this->validate($request, [
             'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
