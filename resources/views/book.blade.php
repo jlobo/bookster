@@ -27,7 +27,7 @@
                     @endforeach
                     | {{$book->published}}
                     | {{$book->genre->name}}
-                    @if (Auth::check() && Auth::user()->isCurator())
+                    @if (Auth::check() && Auth::user()->isCurator() && Auth::user()->approved)
                     | <a  class="btn btn-link"  href='{{url("/book/$book->id/edit")}}'>Edit</a>
                     - <input class="btn btn-link" type="submit" value="Delete">
                     @endif

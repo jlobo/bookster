@@ -75,7 +75,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()->isCurator())
+        if (!Auth::user()->isCurator() || !Auth::user()->approved)
             return redirect('/login');
 
         $this->validate($request, [
@@ -120,7 +120,7 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth::user()->isCurator())
+        if (!Auth::user()->isCurator() || !Auth::user()->approved)
             return redirect('/login');
 
         $this->validate($request, [

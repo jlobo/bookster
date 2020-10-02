@@ -5,7 +5,7 @@ Book edition
 @endsection
 
 @section('navbar')
-@if (Auth::check() && Auth::user()->isCurator())
+@if (Auth::check() && Auth::user()->isCurator() && Auth::user()->approved)
 <li class="nav-item">
     <a class="nav-link" href='{{ url("/book/$book->id/author") }}'>Authors</a>
 </li>

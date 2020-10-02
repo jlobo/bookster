@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-@if (Auth::check() && Auth::user()->isCurator())
+@if (Auth::check() && Auth::user()->isCurator() && Auth::user()->approved)
 <li class="nav-item">
     <a class="nav-link" href="{{ url('/book/create') }}">New Book</a>
 </li>
