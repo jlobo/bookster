@@ -28,6 +28,7 @@ Route::post('/book/{book}/author', 'BookController@add_author')->name('book.add_
 Route::get('/book/{book}/author', 'BookController@author')->name('book.author');
 Route::resource('book', 'BookController');
 Route::resource('review', 'ReviewController');
+Route::resource('user', 'UserController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
