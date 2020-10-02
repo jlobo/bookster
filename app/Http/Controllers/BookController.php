@@ -18,16 +18,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('home')->with('books', Book::paginate(5));
-    }
-
-    public function filter(Request $request)
+    public function index(Request $request)
     {
         $this->validate($request, [
-            'year' => 'numeric|min:1700|max:2020',
-            'genre' => 'numeric|min:1']);
+            'year' => 'nullable|numeric|min:1700|max:2020',
+            'genre' => 'nullable|numeric|min:1']);
 
         $books = DB::table('books');
 
@@ -57,7 +52,7 @@ class BookController extends Controller
             $books = $books->whereBetween('books.published', [$date_ini, $date_end]);
         }
 
-        return view('home')->with('books', $books->paginate(5));
+        return view('home')->with('genres', Genre::all())->with('books', $books->paginate(5));
     }
 
     /**

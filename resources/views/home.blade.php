@@ -11,7 +11,35 @@
 @section('content')
 <section class="testimonials text-center">
     <div class="container">
-      <h2 class="mb-5">Books</h2>
+    <h2 class="mb-5">Books</h2>
+        <form method="GET" action='{{ url("/book") }}'>
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                <input type="text"  name="author" placeholder="author" value="{{request()->author}}">
+                </div>
+                <div class="col-auto my-1">
+                <input type="text"  name="title" placeholder="title"  value="{{request()->title}}">
+                </div>
+                <div class="col-auto my-1">
+                <input type="text"  name="year" placeholder="year"  value="{{request()->year}}">
+                </div>
+                <div class="col-auto my-1">
+                <select class="custom-select mr-sm-2" name="genre">
+                    <option value="" selected>Genre...</option>
+                    @foreach ($genres as $genre)
+                    @if($genre->id == request()->genre)
+                    <option value="{{$genre->id}}" selected="selected">{{$genre->name}}</option>
+                    @else
+                    <option value="{{$genre->id}}">{{$genre->name}}</option>
+                    @endif
+                    @endforeach
+                </select>
+                </div>
+                <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>    
       <div class="row">
 
       @forelse ($books as $book)
@@ -31,24 +59,4 @@
       </div>
     </div>
 </section>
-
-<!-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 @endsection
