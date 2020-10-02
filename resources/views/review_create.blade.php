@@ -26,8 +26,9 @@ Book creation
                         <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" rows="2" autocomplete="description" autofocus>{{old('description')}}</textarea>
+                                <textarea id="description" class="form-control @error('description') is-invalid @enderror @error('book_id') is-invalid @enderror " name="description" rows="2" autocomplete="description" autofocus>{{old('description')}}</textarea>
                                 @error('description')<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror
+                                @error('book_id')<span class="invalid-feedback" role="alert"><strong>There is already a review created.</strong></span>@enderror
                             </div>
                         </div>
 

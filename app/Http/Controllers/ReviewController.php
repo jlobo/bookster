@@ -8,6 +8,7 @@ use App\Review;
 
 use Auth;
 use DateTime;
+use Illuminate\Validation\Rule;
 
 class ReviewController extends Controller
 {
@@ -40,11 +41,16 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'book_id' => 'required|numeric|min:1',
             'rating' => 'required|numeric|min:1|max:5',
-            'description' => 'required|max:255']
-        );
-
+            'description' => 'required|max:255',
+            'book_id' => [
+                'required', 'numeric', 'min:1',
+                Rule::unique('reviews', 'book_id')->where(function ($query) {
+                    return $query->where('user_id', Auth::id());
+                })
+            ]
+        ]);
+        
         $review = new Review();
         $review->book_id = request('book_id');
         $review->user_id = Auth::id();

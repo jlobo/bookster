@@ -79,7 +79,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|max:255',
+            'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
             'image' => 'required|max:999',
             'published' => 'required|date']
@@ -121,7 +121,7 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|max:255',
+            'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
             'image' => 'required|max:999',
             'published' => 'required|date']
