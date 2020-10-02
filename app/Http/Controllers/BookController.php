@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Book;
 use App\Author;
 use App\Genre;
 
+use Auth;
 use DateTime;
 use DB;
 
@@ -49,10 +51,7 @@ class BookController extends Controller
         }
 
         if (!empty(request('year'))) {
-            $date_ini = new DateTime(request('year') . '-01-01');
-            $date_end = new DateTime(intval(request('year')) + 1 . '-01-01');
-            
-            $books = $books->whereBetween('books.published', [$date_ini, $date_end]);
+            $books = $books->where('books.published',  '=', request('year'));
         }
 
         return view('home')->with('genres', Genre::all())->with('books', $books->paginate(5));
@@ -83,7 +82,7 @@ class BookController extends Controller
             'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
             'image' => 'required|max:999',
-            'published' => 'required|date']
+            'published' => 'required|numeric|min:1700|max:2020']
         );
 
         $book = new Book;
@@ -125,11 +124,14 @@ class BookController extends Controller
             return redirect('/login');
 
         $this->validate($request, [
-            'title' => 'required|max:255|unique:books,title',
             'genre' => 'required|numeric|min:1',
             'image' => 'required|max:999',
-            'published' => 'required|date']
-        );
+            'published' => 'required|numeric|min:1700|max:2020',
+            'title' => [
+                'required', 'max:255',
+                Rule::unique('books', 'title')->ignore($id)
+            ]
+        ]);
 
         $book = Book::find($id);
         $book->title = request('title');

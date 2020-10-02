@@ -25,8 +25,8 @@
                     @foreach ($book->authors as $author)
                         {{ $loop->index != 0 ? '-' : '' }} {{$author->first_name}} {{$author->last_name}}
                     @endforeach
-                    | <a href='{{url("/$book->genre_id")}}'>{{$book->genre->name}}</a>
-
+                    | {{$book->published}}
+                    | {{$book->genre->name}}
                     @if (Auth::check() && Auth::user()->isCurator())
                     | <a  class="btn btn-link"  href='{{url("/book/$book->id/edit")}}'>Edit</a>
                     - <input class="btn btn-link" type="submit" value="Delete">
